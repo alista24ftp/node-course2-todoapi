@@ -1,5 +1,6 @@
 const {SHA256} = require('crypto-js');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
 var message = 'I am user number 3';
 var hash = SHA256(message).toString();
@@ -40,3 +41,17 @@ var token = jwt.sign(data, '123abc');
 console.log(token);
 var decoded = jwt.verify(token, '123abc');
 console.log(decoded);
+
+///////////////////////////////////////////
+
+// Bcrypt password hashing Example
+var pwd = '123abc!';
+bcrypt.genSalt(10, (err, salt) => {
+  bcrypt.hash(pwd, salt, (err, hash) => {
+    console.log(hash);
+  });
+});
+var hashedPwd = '$2a$10$tV6KfVE5jsd9QQpH/EV2pOhcpkl4b9nFQ6CHpWOtbVa2PpN0bxeem';
+bcrypt.compare(pwd, hashedPwd, (err, res) => {
+  console.log('Plain and hashed passwords match:', res);
+});
