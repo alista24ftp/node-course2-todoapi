@@ -45,7 +45,7 @@ const populateTodos = (done) => {
     })
     .then(() => done())
     .catch((err) => done(err));
-}
+};
 
 const populateUsers = (done) => {
   User.remove({}).then(() => {
@@ -54,6 +54,6 @@ const populateUsers = (done) => {
 
     return Promise.all([userOne, userTwo]);
   }).then(() => done()).catch((err) => done(err));
-}
+};
 
 module.exports = {dummyTodos, users, populateTodos, populateUsers};
