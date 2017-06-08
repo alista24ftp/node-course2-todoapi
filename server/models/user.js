@@ -41,7 +41,7 @@ UserSchema.methods.toJSON = function(){
   return _.pick(userObject, ['_id', 'email']);
 };
 
-UserSchema.methods.generateAuthToken = function(){
+UserSchema.methods.generateAuthToken = async function(){
   var user = this;
   var access = 'auth';
   var token = jwt.sign({
@@ -52,9 +52,8 @@ UserSchema.methods.generateAuthToken = function(){
     access,
     token
   });
-  return user.save().then(() => {
-    return token;
-  });
+  await user.save();
+  return token;
 };
 
 UserSchema.methods.removeToken = function(token){

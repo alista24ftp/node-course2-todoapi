@@ -46,22 +46,25 @@ const dummyTodos = [
   }
 ];
 
-const populateTodos = (done) => {
-  Todo.remove({})
-    .then(() => {
-      return Todo.insertMany(dummyTodos);
-    })
-    .then(() => done())
-    .catch((err) => done(err));
+const populateTodos = async () => {
+  try {
+    await Todo.remove({});
+    await Todo.insertMany(dummyTodos);
+    return Promise.resolve();
+  } catch (e) {
+    return Promise.reject(e);
+  }
 };
 
-const populateUsers = (done) => {
-  User.remove({}).then(() => {
-    var userOne = new User(users[0]).save();
-    var userTwo = new User(users[1]).save();
-
-    return Promise.all([userOne, userTwo]);
-  }).then(() => done()).catch((err) => done(err));
+const populateUsers = async () => {
+  try {
+    await User.remove({});
+    await new User(users[0]).save();
+    await new User(users[1]).save();
+    return Promise.resolve();
+  } catch (e) {
+    return Promise.reject(e);
+  }
 };
 
 module.exports = {dummyTodos, users, populateTodos, populateUsers};
